@@ -6,6 +6,17 @@ page-home {
         opacity: 1;
         transition: opacity 150ms ease-in
     }
-
+.shadow {
+    border-radius: 50%;
+    width: 100%;
+    height: 1px;
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    background: black;
+    border: 3px solid black;
+    margin: -5px auto 0;
+    z-index: 2;
+}
 
 }
