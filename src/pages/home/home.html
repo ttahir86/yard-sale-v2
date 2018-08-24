@@ -1,6 +1,9 @@
 <ion-header>
   <ion-navbar color="lightCustom">
-    <ion-title>Community Sales</ion-title>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    <ion-title>Community Bazaar</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -30,11 +33,11 @@
 
 
   <ion-pullup (onExpand)="footerExpanded()" (onCollapse)="footerCollapsed()" [(state)]="footerState" >
-    <ion-pullup-tab  (tap)="toggleFooter()" style="background-color: #FFD5FF">
-      <ion-icon name="arrow-up" *ngIf="footerState == 0" color="dark"></ion-icon>
-      <ion-icon name="arrow-down" *ngIf="footerState == 1"  color="dark"></ion-icon>
+    <ion-pullup-tab  (tap)="toggleFooter()" style="background-color: #0E0E52">
+      <ion-icon name="arrow-up" *ngIf="footerState == 0" color="white"></ion-icon>
+      <ion-icon name="arrow-down" *ngIf="footerState == 1"  color="white"></ion-icon>
     </ion-pullup-tab>
-    <ion-toolbar color="softPurple" (tap)="toggleFooter()">
+    <ion-toolbar color="lightCustom" (tap)="toggleFooter()">
       <ion-title>Sales Near You</ion-title>
     </ion-toolbar>
     <ion-content>
