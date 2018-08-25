@@ -7,12 +7,12 @@
  
       
     <ion-title>
-      <!-- <img alt="logo" height="40" src="assets/imgs/whale-sale.png"> -->
+      <!-- <img alt="logo" height="40" src="assets/imgs/whale-sale.png">  -->
 
       W&nbsp;h&nbsp;a&nbsp;l&nbsp;e&nbsp;S&nbsp;a&nbsp;l&nbsp;e
       
   </ion-title>
-  </ion-navbar>
+  </ion-navbar> 
 </ion-header>
 
 <ion-content>
@@ -26,16 +26,22 @@
           Button 2
         </button>
       </div>
-    <agm-marker [latitude]="user.lat" [longitude]="user.lng" [label]="labelOptions"></agm-marker>
-    <agm-circle [latitude]="map.lat" [longitude]="map.lng" [circleDraggable]="false" [editable]="false" [fillColor]="'#FF0000'"[radius]="RADIUS"></agm-circle>
+    <agm-marker *ngIf="isUsersLocationLoaded" [latitude]="user.lat" [longitude]="user.lng" [label]="labelOptions " [animation]="2"></agm-marker>
+    <agm-circle [latitude]="map.lat" [longitude]="map.lng" [circleDraggable]="false" [editable]="false" [fillColor]="'#FF0000'" [radius]="RADIUS" ></agm-circle>
   </agm-map>
 
-   
+<!--    
+    <ion-fab top right edge>
+      <button  ion-fab  color="fabbtn" menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-fab> -->
+    
 
-  <ion-fab right top>
+
+  <ion-fab right top >
     <button ion-fab color="fabbtn">
       <ion-icon name="add"></ion-icon>
-      
     </button>
   </ion-fab>
 

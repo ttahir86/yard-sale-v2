@@ -17,13 +17,14 @@ export class HomePage {
   RADIUS = 10;
   MAX_DISTANCE_TO_SEARCH = 6;//miles
   footerState: IonPullUpFooterState;
+  isUsersLocationLoaded: boolean = false;
 
   public labelOptions = {
-    color: '000000',
+    color: '#CC0000',
     fontFamily: '',
     fontSize: '10px',
     fontWeight: 'bold',
-    text: 'you',
+    text: ' '
   }
 
   public map: {} = {
@@ -78,7 +79,7 @@ export class HomePage {
       radius: this.RADIUS
     }
 
-    
+    this.isUsersLocationLoaded = true; 
   }
 
 
