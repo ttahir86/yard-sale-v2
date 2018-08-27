@@ -7,28 +7,54 @@
 <ion-header>
 
   <ion-navbar color="primaryCustom">
-    <ion-title>create-yard-sale</ion-title>
+    <ion-title>Create&nbsp;&nbsp;&nbsp;&nbsp;Your&nbsp;&nbsp;&nbsp;&nbsp;Sale</ion-title>
+
+    <ion-buttons end>
+      <button ion-button clear (click)="closeModal()"><ion-icon id="close" name="close"></ion-icon></button>
+    
+    </ion-buttons>
+    
+
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-<div class="list">
-  <label class="item item-input">
-    <input type="text" placeholder="Placeholder 1" />
-  </label>
 
-  <label class="item item-input">
-    <input type="text" placeholder="Placeholder 2" />
-  </label>
+<div style="border: 1px solid ">
+  <ion-item>
+    <ion-label color="primary">Name</ion-label>
+    <ion-input placeholder=""></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary">Start Date</ion-label>
+    <!-- date picker needed here-->
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary">End Date</ion-label>
+    <!-- date picker needed here-->
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary">Add Picture</ion-label>
+  </ion-item>
 </div>
-    <button ion-button round color="danger" (click)="closeModal()">Close &nbsp;&nbsp;&nbsp;&nbsp;
+<div style="margin: 20px 0px">
+  <button ion-button full block color="fabbtn" (click)="closeModal()" end>Start</button>
+</div>
+
+
+
+</ion-content>
+
+
+<!-- <ion-footer >
+  <ion-toolbar position="start">
+
+    
+    <button ion-button round full color="fabbtn" (click)="closeModal()" end>Start &nbsp;&nbsp;&nbsp;&nbsp;
       <ion-icon name="close-circle"></ion-icon>
     </button>
 
-  <button ion-button round color="fabbtn" (click)="closeModal()">Start &nbsp;&nbsp;&nbsp;&nbsp;
-    <ion-icon name="close-circle"></ion-icon>
-  </button>
-
-</ion-content>
+  </ion-toolbar>
+</ion-footer> -->
