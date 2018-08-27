@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { IonPullUpFooterState } from '../../../node_modules/ionic-pullup';
+import { CreateYardSalePage } from '../create-yard-sale/create-yard-sale';
+
 
 
 
@@ -39,7 +41,7 @@ export class HomePage {
   };
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private geolocation: Geolocation) { 
+  constructor(public navCtrl: NavController, public navParams: NavParams, private geolocation: Geolocation, private modalCtrl: ModalController) { 
     this.footerState = IonPullUpFooterState.Collapsed;
   }
 
@@ -47,6 +49,21 @@ export class HomePage {
     this.RADIUS = (1609.34 * this.MAX_DISTANCE_TO_SEARCH)
 
     this.getUsersLocation();
+
+  }
+
+  createYardSale(){
+    console.log('open modal start')
+    this.openModal();
+    console.log('open modal end')
+  }
+
+  openModal(){
+    var data = { message: 'hello world' };
+    var modalPage = this.modalCtrl.create('CreateYardSalePage', data);
+    modalPage.present();
+  }
+  closeModal(){
 
   }
 
