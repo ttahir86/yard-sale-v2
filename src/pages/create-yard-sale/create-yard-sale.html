@@ -24,21 +24,36 @@
 
 <div>
   <ion-item>
-    <ion-label color="primary">Name</ion-label>
+    <ion-label color="primary">Yard Sale Name</ion-label>
     <ion-input placeholder=""></ion-input>
   </ion-item>
+
   <ion-item>
-    <ion-label color="primary">Start Date</ion-label>
-    <!-- date picker needed here-->
+    <ion-label color="primary">Add Pciture</ion-label>
   </ion-item>
   <ion-item>
-    <ion-label color="primary">End Date</ion-label>
-    <!-- date picker needed here-->
+    <div style="border: 2px dashed black; display: inline-block">
+      <ion-img  width="150" height="150" src="assets/imgs/image-placeholder.png"></ion-img>
+    </div>
   </ion-item>
-  <ion-item>
-    <ion-label color="primary">Add Picture</ion-label>
-  </ion-item>
+
+  
+
+  <ion-list radio-group [(ngModel)]="relationship">
+    <ion-item>
+      <ion-label >Today</ion-label>
+      <ion-radio value="Today"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label>Future</ion-label>
+      <ion-radio value="Future"></ion-radio>
+    </ion-item>
+  </ion-list>
 </div>
+
+
+
+
 <div style="margin: 20px 0px">
   <button ion-button full block color="fabbtn" (click)="closeModal()" end>Start</button>
 </div>

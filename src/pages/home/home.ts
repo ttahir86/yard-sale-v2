@@ -40,6 +40,8 @@ export class HomePage {
     zoom: this.ZOOM_LEVEL
   };
 
+  public svcOptions: {} = { position: 0}
+
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private geolocation: Geolocation, private modalCtrl: ModalController) { 
     this.footerState = IonPullUpFooterState.Collapsed;

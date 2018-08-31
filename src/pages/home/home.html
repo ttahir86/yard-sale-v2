@@ -17,7 +17,16 @@
 
 <ion-content>
 
-  <agm-map [latitude]="map.lat" [longitude]="map.lng" [zoom]="map.zoom" style="width:100%; height: 100%" [gestureHandling]="'none'">
+  <agm-map 
+        style="width:100%; height: 100%"
+        [latitude]="map.lat" 
+        [longitude]="map.lng" 
+        [zoom]="map.zoom"
+        [gestureHandling]="'none'" 
+        [zoomControl]="false"  
+        [streetViewControl]="false"
+        [streetViewControl]="svcOptions" 
+        [zoomControlOptions]="svcOptions">
       <div class="action-buttons">
         <button color="primary" ion-button text-only>
           Button 1
@@ -39,7 +48,7 @@
     
 
 
-  <ion-fab right top >
+  <ion-fab right bottom >
     <button (click)="createYardSale()" ion-fab color="fabbtn">
       <ion-icon name="add" ></ion-icon>
     </button>

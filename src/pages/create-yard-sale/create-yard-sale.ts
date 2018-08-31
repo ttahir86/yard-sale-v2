@@ -14,13 +14,14 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
   templateUrl: 'create-yard-sale.html',
 })
 export class CreateYardSalePage {
-
+  relationship: any = "Today";
   constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl: ViewController) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CreateYardSalePage');
     console.log(this.navParams.get('message'));
+    console.log(this.relationship);
   }
 
   public closeModal() {
