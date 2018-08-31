@@ -14,8 +14,11 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
   templateUrl: 'create-yard-sale.html',
 })
 export class CreateYardSalePage {
-  relationship: any = "Today";
+  relationship:   any = "Today";
+  startTimeModel: any = "4:00";
+  endTimeModel:   any = "4:00";
   constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl: ViewController) {
+    this.relationship = "Today";
   }
 
   ionViewDidLoad() {
