@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, ToastController } from 'ionic-angular';
 
 /**
  * Generated class for the CreateYardSalePage page.
@@ -17,7 +17,9 @@ export class CreateYardSalePage {
   relationship:   any = "Today";
   startTimeModel: any = "4:00";
   endTimeModel:   any = "4:00";
-  constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl: ViewController) {
+
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl: ViewController, private toastCtrl: ToastController) {
     this.relationship = "Today";
   }
 
@@ -27,8 +29,28 @@ export class CreateYardSalePage {
     console.log(this.relationship);
   }
 
-  public closeModal() {
+  private closeModal() {
     this.viewCtrl.dismiss();
+  }
+
+  public createYardSale(){
+    this.presentToast();
+
+    this.closeModal();
+  }
+
+  presentToast() {
+    let toast = this.toastCtrl.create({
+      message: 'Yard Sale was created successfully!',
+      duration: 3000,
+      position: 'middle'
+    });
+
+    toast.onDidDismiss(() => {
+      console.log('Dismissed toast');
+    });
+
+    toast.present();
   }
 
 }
