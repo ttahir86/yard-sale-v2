@@ -34,14 +34,18 @@
           <ion-row>
             <ion-col >
               <ion-item >
-                <ion-label color="black">Now</ion-label>
+                <ion-label color="black" 
+                [style.font-weight]="selectedRadioButton === 'Now' ? 'bold' : 'normal'">
+                    Now</ion-label>
                 <ion-radio value="Now" (ionSelect)="onRadioButtonClick(false)"></ion-radio>
               </ion-item>
             </ion-col>
 
             <ion-col>
               <ion-item>
-                <ion-label color="black">Future</ion-label>
+                <ion-label color="black"
+                [style.font-weight]="selectedRadioButton === 'Future' ? 'bold' : 'normal'">
+                Future</ion-label>
                 <ion-radio value="Future" (ionSelect)="onRadioButtonClick(true)"></ion-radio>
               </ion-item>
             </ion-col>
@@ -71,8 +75,24 @@
         </ion-label>
           <ion-row>        
             <ion-col *ngFor="let date of futureDates" class="date-block" >
-              <ion-label [id]="date.date" class="date-cols" (click)="onDateClick(event)" [style.color]="selectedDateId===date.date ? '#488aff' : 'black'">{{date.date}}</ion-label>
-              <ion-label [id]="date.date" class="day-cols"  (click)="onDateClick(event)" [style.color]="selectedDateId===date.date ? '#488aff' : 'black'">{{date.day}}</ion-label>
+              <ion-label 
+                [id]="date.date" 
+                class="date-cols" 
+                (click)="onDateClick(event)" 
+                [style.color]="selectedDateId === date.date ? '#488aff' : 'black'"
+                [style.font-weight]="selectedDateId === date.date ? 'bold' : 'normal'"
+                [style.opacity]="selectedDateId === date.date ? '1.0' : '0.7'">
+                {{date.date}}
+              </ion-label>
+              <ion-label 
+                [id]="date.date" 
+                class="day-cols"  
+                (click)="onDateClick(event)" 
+                [style.font-weight]="selectedDateId===date.date ? 'bold' : 'normal'"
+                [style.color]="selectedDateId===date.date ? '#488aff' : 'black'"
+                [style.opacity]="selectedDateId === date.date ? '0.8' : '0.5'">
+                {{date.day}}</ion-label>
+
             </ion-col>
           </ion-row>
       </div>
@@ -90,7 +110,7 @@
             <ion-col>
               <ion-item>
                 <ion-label color="black">Start Time</ion-label>
-                <ion-datetime #datePicker (ionChange)="onTimePickerChange()" (ionCancel)="myDate=undefined" displayFormat="h:mm A" [(ngModel)]="startTimeModel" style="color: #488aff"></ion-datetime>
+                <ion-datetime #datePicker (ionChange)="onTimePickerChange()" (ionCancel)="myDate=undefined" displayFormat="h:mm A" [(ngModel)]="startTimeModel" style="color: #488aff; font-weight: bold;"></ion-datetime>
               </ion-item>
             </ion-col>
             <!-- <ion-col>

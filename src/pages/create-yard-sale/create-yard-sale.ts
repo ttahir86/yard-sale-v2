@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, ToastController,AlertController } from 'ionic-angular';
 
 /**
  * Generated class for the CreateYardSalePage page.
@@ -44,7 +44,10 @@ export class CreateYardSalePage {
   };
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl: ViewController, private toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, 
+    private viewCtrl: ViewController, 
+    private toastCtrl: ToastController,
+    private alertCtrl: AlertController) {
     this.selectedRadioButton = "Now";
   }
 
@@ -129,8 +132,10 @@ export class CreateYardSalePage {
   }
 
   public createYardSale(){
-    this.presentToast();
-    this.closeModal();
+
+    this.presentConfirm();
+
+
   }
 
   public onRadioButtonClick(isFutureSelected: boolean){
@@ -143,6 +148,32 @@ export class CreateYardSalePage {
       this.isSubmitButtonDisabled = true;
     }
   }
+  presentConfirm() {
+    let alert = this.alertCtrl.create({
+      title: 'Confirm WhaleSale',
+      message: 'Create your Whale Sale? Once your WhaleSale begins, you can stop it at anytime.',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Start',
+          handler: () => {
+            console.log('Start clicked');
+            
+            this.presentToast();
+            this.closeModal();
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
 
   presentToast() {
     let toast = this.toastCtrl.create({
@@ -157,5 +188,7 @@ export class CreateYardSalePage {
 
     toast.present();
   }
+
+  
 
 }
