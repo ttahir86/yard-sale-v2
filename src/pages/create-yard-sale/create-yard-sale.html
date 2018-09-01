@@ -72,7 +72,9 @@
       </div>
 
       <!-- time picker -->
-      <div *ngIf="showTime && selectedRadioButton==='Future'" align="center" style="text-align: center; margin: 0 auto;" >
+      <div *ngIf="showTime && selectedRadioButton==='Future'" align="center" style="text-align: center; margin: 0 auto; width: 100%" >
+
+      <!-- <div *ngIf="showTime && selectedRadioButton==='Future'" align="center" style="text-align: center; margin: 0 auto;" > -->
         <ion-card>
           <ion-label>Choose your start time:</ion-label>
           <ion-row>
@@ -82,12 +84,12 @@
                 <ion-datetime #datePicker (ionCancel)="myDate=undefined" displayFormat="h:mm A" [(ngModel)]="startTimeModel"></ion-datetime>
               </ion-item>
             </ion-col>
-            <ion-col>
+            <!-- <ion-col>
               <ion-item>
                 <ion-label color="black">End Time</ion-label>
                 <ion-datetime #datePicker (ionCancel)="myDate=undefined" displayFormat="h:mm A" [(ngModel)]="startTimeModel"></ion-datetime>
               </ion-item>
-            </ion-col>
+            </ion-col> -->
           </ion-row>
         </ion-card>
       </div>

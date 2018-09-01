@@ -24,7 +24,7 @@ import { IonPullupModule } from 'ionic-pullup';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    AgmCoreModule.forRoot({ apiKey: 'NNN' }),
+    AgmCoreModule.forRoot({ apiKey: 'none' }),
     IonPullupModule
   ],
   bootstrap: [IonicApp],
