@@ -9,7 +9,9 @@ page-create-yard-sale {
         color: grey;
     }
 
-
+    .mytitle{
+        font-size: 8px;   
+    }
 
     .masters {
         background-color: #fffdfd;
@@ -25,15 +27,51 @@ page-create-yard-sale {
 
     .date-cols{
         font-size: 22px;
+ 
         
     }
     .day-cols{
-        font-size: 8px;
+        font-size: 15px;
+        color: #222;
+        opacity: 0.5;
     }
     
     .date-block{
        background-color: #fffdfd;
+       font-weight: normal;
+  
+    }
+
+    .custom-icon{
+        font-size: 20px;
+        color: #3f6093;
+        text-align: left;
+        width: 25px;
+    }
+
+    .question-header{
+        text-align: center; 
+        margin: 0 auto; 
+        width: 100%;
+        font-weight: bold;
+
+        margin: 20px 0px;
+        
     }
 
 }
 
+// primary:    #488aff,
+//   secondary:  #e0e0e0,
+//   danger:     #f53d3d,
+//   light:      #f4f4f4,
+//   dark:       #222,
+//   primaryCustom:  #3f6093,
+//   secondaryCustom:  #370031,
+//   dangerCustom:     #832232,
+//   lightCustom:      #FDF5BF,
+//   darkCustom:       #222,
+//   softPurple: #FFD5FF,
+//   white: #FFFFFF,
+//   fabbtn: #113b7f,
+//   grey: #D3D3D3,
