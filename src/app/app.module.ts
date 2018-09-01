@@ -13,7 +13,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { Geolocation } from '@ionic-native/geolocation';
 import { AgmCoreModule } from '@agm/core';
 import { IonPullupModule } from 'ionic-pullup';
-
+// google key: AIzaSyDVW6LSgynAbnYKwBql_oHPmEFrardyyAM
 
 @NgModule({
   declarations: [
@@ -24,7 +24,7 @@ import { IonPullupModule } from 'ionic-pullup';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    AgmCoreModule.forRoot({ apiKey: 'AIzaSyDVW6LSgynAbnYKwBql_oHPmEFrardyyAM' }),
+    AgmCoreModule.forRoot({ apiKey: 'NNN' }),
     IonPullupModule
   ],
   bootstrap: [IonicApp],
