@@ -20,6 +20,10 @@ export class CreateYardSalePage {
   isFutureSelected: boolean = false;
   showTime:boolean = false;
   currentMonth : string = "";
+  isSubmitButtonDisabled : boolean = false;
+  btnKeepDisabling : boolean = true;
+  dateStyle = "date-selected";
+  selectedDateId: any = false;
   
 
   futureDates : {}[] = [];
@@ -45,7 +49,6 @@ export class CreateYardSalePage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad CreateYardSalePage');
     this.getFutureDates();
     console.log(this.navParams.get('message'));
   }
@@ -102,10 +105,22 @@ export class CreateYardSalePage {
     return today; 
   }
 
-  onDateClick(){
-    let selectedDateId = event.srcElement.id;
-    console.log(selectedDateId);     
+  public onDateClick(){
+    this.selectedDateId = event.srcElement.id;    
     this.showTime = true;
+
+    if (this.selectedRadioButton === "Future" && this.btnKeepDisabling ===  true){
+      this.isSubmitButtonDisabled = true;
+    }
+    console.log('datepicker')
+
+    
+  }
+
+  public onTimePickerChange(){
+    console.log('datepicker change')
+    this.isSubmitButtonDisabled = false;
+    this.btnKeepDisabling = false;
   }
 
 
@@ -118,8 +133,15 @@ export class CreateYardSalePage {
     this.closeModal();
   }
 
-  setFutureRadiobutton(isFutureSelected: boolean){
+  public onRadioButtonClick(isFutureSelected: boolean){
     this.isFutureSelected = isFutureSelected;
+ 
+    
+    if (this.selectedRadioButton ==="Now"){
+      this.isSubmitButtonDisabled = false;
+    }else if (this.selectedRadioButton === "Future" && this.btnKeepDisabling ===  true){
+      this.isSubmitButtonDisabled = true;
+    }
   }
 
   presentToast() {
