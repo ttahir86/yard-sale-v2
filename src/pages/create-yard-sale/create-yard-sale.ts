@@ -26,7 +26,7 @@ export class CreateYardSalePage {
   btnKeepDisabling : boolean = true;
   dateStyle = "date-selected";
   selectedDateId: any = false;
-  user: {};
+  user: {lat: string, lng: string} = {lat: '', lng: ''};
   
 
   futureDates : {}[] = [];
@@ -226,7 +226,7 @@ export class CreateYardSalePage {
   private postYardSale(){
     // this.presentLoadingSpinner();
     var link = 'https://talaltahir.com/local-messages-api/create-whale-sale.php';
-    console.log(this.user.lat);
+
     let yardSaleData = JSON.stringify
     (
       {
@@ -241,7 +241,12 @@ export class CreateYardSalePage {
       try {
         let response = JSON.parse(data["_body"]);
         console.log(response);
-        this.presentToastSuccess();
+
+        this.presentLoadingSpinner();
+        setTimeout(() => {
+          this.presentToastSuccess();
+        }, 3000);
+        
         this.closeModal();
       } catch (error) {
         console.log(data);
