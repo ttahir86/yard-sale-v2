@@ -15,6 +15,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { Geolocation } from '@ionic-native/geolocation';
 import { AgmCoreModule } from '@agm/core';
 import { IonPullupModule } from 'ionic-pullup';
+import { UniqueDeviceID } from '../../node_modules/@ionic-native/unique-device-id';
+
 // google key: AIzaSyDVW6LSgynAbnYKwBql_oHPmEFrardyyAM
 
 @NgModule({
@@ -38,6 +40,7 @@ import { IonPullupModule } from 'ionic-pullup';
   ],
   providers: [
     StatusBar,
+    UniqueDeviceID,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Geolocation

@@ -35,6 +35,10 @@
 		$ ionic cordova plugin add cordova-plugin-googleplus --variable REVERSED_CLIENT_ID=myreversedclientid
 		$ npm install --save @ionic-native/google-plus
 		import { GooglePlus } from '@ionic-native/google-plus';
+	
+	7. Unique ID
+		$ ionic cordova plugin add cordova-plugin-uniquedeviceid
+		$ npm install --save @ionic-native/unique-device-id
 
 
 

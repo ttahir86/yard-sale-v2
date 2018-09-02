@@ -3,6 +3,7 @@ import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { IonPullUpFooterState } from '../../../node_modules/ionic-pullup';
 import { CreateYardSalePage } from '../create-yard-sale/create-yard-sale';
+import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 
 
 
@@ -43,11 +44,17 @@ export class HomePage {
   public svcOptions: {} = { position: 0}
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private geolocation: Geolocation, private modalCtrl: ModalController) { 
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+     private geolocation: Geolocation, 
+     private modalCtrl: ModalController,
+     private uniqueDeviceID: UniqueDeviceID) { 
     this.footerState = IonPullUpFooterState.Collapsed;
   }
 
   ionViewDidLoad() {
+    this.uniqueDeviceID.get()
+      .then((uuid: any) => console.log(uuid))
+      .catch((error: any) => console.log(error));
     this.RADIUS = (1609.34 * this.MAX_DISTANCE_TO_SEARCH)
 
     this.getUsersLocation();
