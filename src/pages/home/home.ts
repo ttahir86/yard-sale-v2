@@ -61,7 +61,7 @@ export class HomePage {
   }
 
   openModal(){
-    var data = { message: 'hello world' };
+    var data ={"user" : this.user} ;
     var modalPage = this.modalCtrl.create('CreateYardSalePage', data);
     modalPage.present();
   }

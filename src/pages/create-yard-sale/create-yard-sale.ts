@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, ToastController,AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, ToastController,AlertController, LoadingController } from 'ionic-angular';
+import { Http } from '../../../node_modules/@angular/http';
+
 
 /**
  * Generated class for the CreateYardSalePage page.
@@ -24,6 +26,7 @@ export class CreateYardSalePage {
   btnKeepDisabling : boolean = true;
   dateStyle = "date-selected";
   selectedDateId: any = false;
+  user: {};
   
 
   futureDates : {}[] = [];
@@ -47,13 +50,16 @@ export class CreateYardSalePage {
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     private viewCtrl: ViewController, 
     private toastCtrl: ToastController,
-    private alertCtrl: AlertController) {
+    private alertCtrl: AlertController,
+    private loadingCtrl: LoadingController,
+    private http: Http) {
     this.selectedRadioButton = "Now";
   }
 
   ionViewDidLoad() {
     this.getFutureDates();
-    console.log(this.navParams.get('message'));
+    console.log(this.navParams.get('user'));
+    this.user = this.navParams.get('user');
   }
 
 
@@ -148,10 +154,12 @@ export class CreateYardSalePage {
       this.isSubmitButtonDisabled = true;
     }
   }
-  presentConfirm() {
+
+
+  private presentConfirm() {
     let alert = this.alertCtrl.create({
       title: 'Confirm WhaleSale',
-      message: 'Create your Whale Sale? Once your WhaleSale begins, you can stop it at anytime.',
+      message: 'Once your WhaleSale begins, you can stop it at anytime right from the home screen. Each WhaleSale posting will be automatically closed after 24hrs from the start. But don\'t worry, you can start as many you want!',
       buttons: [
         {
           text: 'Cancel',
@@ -161,23 +169,33 @@ export class CreateYardSalePage {
           }
         },
         {
-          text: 'Start',
+          text: 'Got it!',
           handler: () => {
             console.log('Start clicked');
-            
-            this.presentToast();
-            this.closeModal();
+            this.postYardSale();
+           
           }
         }
       ]
     });
     alert.present();
   }
+  presentLoadingSpinner() {
+    let spinner = this.loadingCtrl.create({
+      content: 'Creating WhaleSale...'
+    });
+  
+    spinner.present();
 
+  
+    setTimeout(() => {
+      spinner.dismiss();
+    }, 3000);
 
-  presentToast() {
+  }
+  presentToastSuccess() {
     let toast = this.toastCtrl.create({
-      message: 'Yard Sale was created successfully!',
+      message: 'Your WhaleSale was created successfully!',
       duration: 3000,
       position: 'middle'
     });
@@ -187,6 +205,55 @@ export class CreateYardSalePage {
     });
 
     toast.present();
+  }
+
+  presentToastFailure() {
+    let toast = this.toastCtrl.create({
+      message: 'Something went wrong! Sorry...',
+      duration: 3000,
+      position: 'middle'
+    });
+
+    toast.onDidDismiss(() => {
+      console.log('Dismissed toast');
+    });
+
+    toast.present();
+  }
+
+
+
+  private postYardSale(){
+    // this.presentLoadingSpinner();
+    var link = 'https://talaltahir.com/local-messages-api/create-whale-sale.php';
+    console.log(this.user.lat);
+    let yardSaleData = JSON.stringify
+    (
+      {
+        lat: this.user.lat,
+        lng: this.user.lng,
+        startDate: '2018-09-01',
+        startTime: '23:59:59'
+      }
+    );
+
+    this.http.post(link, yardSaleData).subscribe(data => {
+      try {
+        let response = JSON.parse(data["_body"]);
+        console.log(response);
+        this.presentToastSuccess();
+        this.closeModal();
+      } catch (error) {
+        console.log(data);
+        console.log(error);
+        this.presentToastFailure();
+
+       
+      }
+    }, error => {
+      this.presentToastFailure();
+      console.log(error);
+    });
   }
 
   
