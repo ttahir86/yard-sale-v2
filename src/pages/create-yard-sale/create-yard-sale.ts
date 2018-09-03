@@ -27,6 +27,8 @@ export class CreateYardSalePage {
   dateStyle = "date-selected";
   selectedDateId: any = false;
   user: {lat: string, lng: string} = {lat: '', lng: ''};
+  selectedTime: any;
+  selectedDate: any;
   
 
   futureDates : {}[] = [];
@@ -114,22 +116,21 @@ export class CreateYardSalePage {
     return today; 
   }
 
-  public onDateClick(){
-    this.selectedDateId = event.srcElement.id;    
+  public onDateClick(id){
+    this.selectedDateId = id;    
     this.showTime = true;
 
     if (this.selectedRadioButton === "Future" && this.btnKeepDisabling ===  true){
       this.isSubmitButtonDisabled = true;
     }
-    console.log('datepicker')
 
-    
   }
 
   public onTimePickerChange(){
     console.log('datepicker change')
     this.isSubmitButtonDisabled = false;
     this.btnKeepDisabling = false;
+    
   }
 
 
@@ -221,10 +222,47 @@ export class CreateYardSalePage {
     toast.present();
   }
 
-
+  private getKeyByValue(object, value) {
+    return Object.keys(object).find(key => object[key] === value);
+  }
 
   private postYardSale(){
     // this.presentLoadingSpinner();
+    console.log('start')
+
+    if (this.selectedRadioButton === 'Future'){
+      console.log(this.selectedTime);
+      this.selectedTime = this.selectedTime + ':00'
+
+      let numericalMonth = this.getKeyByValue(this.monthDict, this.futureDates[this.selectedDateId]['month'] )
+      console.log(numericalMonth);
+      this.selectedDate = this.futureDates[this.selectedDateId]['year'] + "-" + numericalMonth + "-" + this.futureDates[this.selectedDateId]['date'];
+    }else{
+      let today: any = new Date();
+      let dd: any  = today.getDate();
+      let mm: any = today.getMonth()+1; //January is 0!
+      let yyyy = today.getFullYear();
+
+      dd = dd < 10 ? '0' + dd : dd;
+      mm = mm < 10 ? '0' + mm : mm;
+      
+      this.selectedDate = yyyy + '-' + mm + '-' + dd
+
+      let hh = today.getHours();
+      let min = today.getMinutes();
+      let ss = today.getSeconds();
+
+      min = min < 10 ? '0' + min : min;
+      ss = ss < 10 ? '0' + ss : ss;
+
+      
+
+      this.selectedTime = hh + ":" + min + ":" + ss
+
+
+    }
+    console.log(this.selectedDate);
+    console.log(this.selectedTime);
     var link = 'https://talaltahir.com/local-messages-api/create-whale-sale.php';
 
     let yardSaleData = JSON.stringify
@@ -232,8 +270,8 @@ export class CreateYardSalePage {
       {
         lat: this.user.lat,
         lng: this.user.lng,
-        startDate: '2018-09-01',
-        startTime: '23:59:59'
+        startDate: this.selectedDate,
+        startTime: this.selectedTime
       }
     );
 

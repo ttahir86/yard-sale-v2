@@ -4,6 +4,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { IonPullUpFooterState } from '../../../node_modules/ionic-pullup';
 import { CreateYardSalePage } from '../create-yard-sale/create-yard-sale';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id';
+import { Http } from '../../../node_modules/@angular/http';
 
 
 
@@ -21,6 +22,8 @@ export class HomePage {
   MAX_DISTANCE_TO_SEARCH = 6;//miles
   footerState: IonPullUpFooterState;
   isUsersLocationLoaded: boolean = false;
+  sales: any[] = [];
+  closestSales: any;
 
   public labelOptions = {
     color: '#CC0000',
@@ -35,7 +38,7 @@ export class HomePage {
     lng: 5,
     zoom: this.ZOOM_LEVEL
   }
-  public user: {} = {
+  public user: any = {
     lat: 5,
     lng: 5,
     zoom: this.ZOOM_LEVEL
@@ -47,7 +50,8 @@ export class HomePage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
      private geolocation: Geolocation, 
      private modalCtrl: ModalController,
-     private uniqueDeviceID: UniqueDeviceID) { 
+     private uniqueDeviceID: UniqueDeviceID,
+    private http: Http) { 
     this.footerState = IonPullUpFooterState.Collapsed;
   }
 
@@ -106,6 +110,8 @@ export class HomePage {
     }
 
     this.isUsersLocationLoaded = true; 
+
+    this.findSales();
   }
 
 
@@ -124,6 +130,38 @@ export class HomePage {
   toggleFooter() {
     this.footerState = this.footerState == IonPullUpFooterState.Collapsed ? IonPullUpFooterState.Expanded : IonPullUpFooterState.Collapsed;
   }
+
+
+
+
+  findSales(){
+    var link = 'https://talaltahir.com/local-messages-api/find-sales.php';
+    var userGeoData = JSON.stringify
+    (
+      {
+        lat: this.user.lat,
+        lng: this.user.lng,
+        maxDistance: this.MAX_DISTANCE_TO_SEARCH,
+      }
+    );
+  
+    this.http.post(link, userGeoData).subscribe(data => {
+      try {
+        this.closestSales = JSON.parse(data["_body"]);
+      } catch (error) {
+        console.log(data);
+      }
+      
+      for (let i in this.closestSales ) {
+        var lat =  Number(this.closestSales[i].latitude)
+        var lng =  Number(this.closestSales[i].longitude)
+        this.sales.push({latitude:lat, longitude: lng})
+     }
+    }, error => {
+      console.log(error);
+    });
+  }
+
 
 
 }

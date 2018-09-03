@@ -78,23 +78,23 @@
           &nbsp;Choose your start date:
         </ion-label>
           <ion-row>        
-            <ion-col *ngFor="let date of futureDates" class="date-block" >
+            <ion-col *ngFor="let date of futureDates;let i = index" class="date-block" >
               <ion-label 
-                [id]="date.date" 
+                [id]="i" 
                 class="date-cols" 
-                (click)="onDateClick(event)" 
-                [style.color]="selectedDateId === date.date ? '#488aff' : 'black'"
-                [style.font-weight]="selectedDateId === date.date ? 'bold' : 'normal'"
-                [style.opacity]="selectedDateId === date.date ? '1.0' : '0.7'">
+                (click)="onDateClick(i)" 
+                [style.color]="selectedDateId === i ? '#488aff' : 'black'"
+                [style.font-weight]="selectedDateId === i ? 'bold' : 'normal'"
+                [style.opacity]="selectedDateId === i ? '1.0' : '0.7'">
                 {{date.date}}
               </ion-label>
               <ion-label 
-                [id]="date.date" 
+                [id]="i" 
                 class="day-cols"  
-                (click)="onDateClick(event)" 
-                [style.font-weight]="selectedDateId===date.date ? 'bold' : 'normal'"
-                [style.color]="selectedDateId===date.date ? '#488aff' : 'black'"
-                [style.opacity]="selectedDateId === date.date ? '0.8' : '0.5'">
+                (click)="onDateClick(i)" 
+                [style.font-weight]="selectedDateId === i ? 'bold' : 'normal'"
+                [style.color]="selectedDateId === i ? '#488aff' : 'black'"
+                [style.opacity]="selectedDateId === i ? '0.8' : '0.5'">
                 {{date.day}}</ion-label>
 
             </ion-col>
@@ -114,7 +114,7 @@
             <ion-col>
               <ion-item>
                 <ion-label color="black">Start Time</ion-label>
-                <ion-datetime #datePicker (ionChange)="onTimePickerChange()" (ionCancel)="myDate=undefined" displayFormat="h:mm A" [(ngModel)]="startTimeModel" style="color: #488aff; font-weight: bold;"></ion-datetime>
+                <ion-datetime #datePicker (ionChange)="onTimePickerChange()" [(ngModel)]="selectedTime" (ionCancel)="myDate=undefined" displayFormat="h:mm A" [(ngModel)]="startTimeModel" style="color: #488aff; font-weight: bold;"></ion-datetime>
               </ion-item>
             </ion-col>
             <!-- <ion-col>

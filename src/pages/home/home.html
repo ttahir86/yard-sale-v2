@@ -16,9 +16,7 @@
 </ion-header>
 
 <ion-content>
-
-  <agm-map 
-        style="width:100%; height: 100%"
+<!-- style="width:100%; height: 100%"
         [latitude]="map.lat" 
         [longitude]="map.lng" 
         [zoom]="map.zoom"
@@ -26,7 +24,13 @@
         [zoomControl]="false"  
         [streetViewControl]="false"
         [streetViewControl]="svcOptions" 
-        [zoomControlOptions]="svcOptions">
+        [zoomControlOptions]="svcOptions"
+       -->
+  <agm-map 
+        style="width:100%; height: 100%"
+        [latitude]="map.lat" 
+        [longitude]="map.lng" 
+        [zoom]="map.zoom">
       <div class="action-buttons">
         <button color="primary" ion-button text-only>
           Button 1
@@ -35,7 +39,9 @@
           Button 2
         </button>
       </div>
-    <agm-marker *ngIf="isUsersLocationLoaded" [latitude]="user.lat" [longitude]="user.lng" [label]="labelOptions " [animation]="2"></agm-marker>
+    <!-- <agm-marker *ngIf="isUsersLocationLoaded" [latitude]="user.lat" [longitude]="user.lng" [label]="labelOptions " [animation]="2"></agm-marker> -->
+    <agm-marker *ngFor="let sale of sales" [latitude]="sale.latitude" [longitude]="sale.longitude" [label]="labelOptions" [animation]="2"></agm-marker>      
+
     <agm-circle [latitude]="map.lat" [longitude]="map.lng" [circleDraggable]="false" [editable]="false" [fillColor]="'#FF0000'" [radius]="RADIUS" ></agm-circle>
   </agm-map>
 
@@ -48,7 +54,7 @@
     
 
 
-  <ion-fab right bottom >
+  <ion-fab left bottom>
     <button (click)="createYardSale()" ion-fab color="fabbtn">
       <ion-icon name="add" ></ion-icon>
     </button>

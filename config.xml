@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="io.ionic.starter" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>yard-sale-v2</name>
+    <name>WhaleSale</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
     <content src="index.html" />
@@ -85,4 +85,5 @@
         <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="We need your location to find yard sales near you!" />
     </plugin>
     <plugin name="cordova-plugin-uniquedeviceid" spec="^1.3.2" />
+    <engine name="android" spec="7.0.0" />
 </widget>
