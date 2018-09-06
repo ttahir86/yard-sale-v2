@@ -17,6 +17,8 @@ import { AgmCoreModule } from '@agm/core';
 import { IonPullupModule } from 'ionic-pullup';
 import { UniqueDeviceID } from '../../node_modules/@ionic-native/unique-device-id';
 
+// google key: AIzaSyBq72yRsZZmvtdRX9SUaVu5Fqee8RKTCcM
+
 @NgModule({
   declarations: [
     MyApp,
@@ -27,7 +29,7 @@ import { UniqueDeviceID } from '../../node_modules/@ionic-native/unique-device-i
     BrowserModule,
     HttpModule,
     IonicModule.forRoot(MyApp),
-    AgmCoreModule.forRoot({ apiKey: '' }),
+    AgmCoreModule.forRoot({ apiKey: 'AIzaSyBq72yRsZZmvtdRX9SUaVu5Fqee8RKTCcM' }),
     IonPullupModule
   ],
   bootstrap: [IonicApp],

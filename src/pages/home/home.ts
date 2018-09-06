@@ -24,6 +24,7 @@ export class HomePage {
   isUsersLocationLoaded: boolean = false;
   sales: any[] = [];
   closestSales: any;
+  newlyAddedYardSale: any = false;
 
   public labelOptions = {
     color: '#CC0000',
@@ -42,6 +43,15 @@ export class HomePage {
     lat: 5,
     lng: 5,
     zoom: this.ZOOM_LEVEL
+  };
+
+  mapIcon: any = {
+    0:  {  
+      url: './assets/imgs/yard-sale-pin.gif',
+      scaledSize: {
+      height: 30,
+      width: 30},
+    },
   };
 
   public svcOptions: {} = { position: 0}
@@ -74,11 +84,26 @@ export class HomePage {
   openModal(){
     var data ={"user" : this.user} ;
     var modalPage = this.modalCtrl.create('CreateYardSalePage', data);
+    modalPage.onDidDismiss(returndata => {
+    
+      try{
+        console.log(returndata);
+        this.newlyAddedYardSale = JSON.parse(returndata);
+        this.sales.push(
+          {
+            latitude : this.newlyAddedYardSale.latitude, 
+            longitude: this.newlyAddedYardSale.longitude, 
+            title: '', 
+            distance: 0.0
+          })
+
+      }catch(error){
+        console.log(error)
+      }
+    });
     modalPage.present();
   }
-  closeModal(){
 
-  }
 
 
   getUsersLocation(){
@@ -147,6 +172,7 @@ export class HomePage {
   
     this.http.post(link, userGeoData).subscribe(data => {
       try {
+        console.log(data["_body"]);
         this.closestSales = JSON.parse(data["_body"]);
       } catch (error) {
         console.log(data);
@@ -155,13 +181,14 @@ export class HomePage {
       for (let i in this.closestSales ) {
         var lat =  Number(this.closestSales[i].latitude)
         var lng =  Number(this.closestSales[i].longitude)
-        this.sales.push({latitude:lat, longitude: lng})
+ 
+        let d = Number(this.closestSales[i].distance).toFixed(2);
+        this.sales.push({latitude:lat, longitude: lng, title: this.closestSales[i].title, distance: d})
      }
     }, error => {
       console.log(error);
     });
   }
-
 
 
 }

@@ -29,6 +29,7 @@ export class CreateYardSalePage {
   user: {lat: string, lng: string} = {lat: '', lng: ''};
   selectedTime: any;
   selectedDate: any;
+  postYardSaleData: any;
   
 
   futureDates : {}[] = [];
@@ -135,7 +136,9 @@ export class CreateYardSalePage {
 
 
   private closeModal() {
-    this.viewCtrl.dismiss();
+
+
+    this.viewCtrl.dismiss(this.postYardSaleData);
   }
 
   public createYardSale(){
@@ -245,7 +248,7 @@ export class CreateYardSalePage {
 
       dd = dd < 10 ? '0' + dd : dd;
       mm = mm < 10 ? '0' + mm : mm;
-      
+
       this.selectedDate = yyyy + '-' + mm + '-' + dd
 
       let hh = today.getHours();
@@ -265,7 +268,7 @@ export class CreateYardSalePage {
     console.log(this.selectedTime);
     var link = 'https://talaltahir.com/local-messages-api/create-whale-sale.php';
 
-    let yardSaleData = JSON.stringify
+    this.postYardSaleData = JSON.stringify
     (
       {
         lat: this.user.lat,
@@ -275,7 +278,7 @@ export class CreateYardSalePage {
       }
     );
 
-    this.http.post(link, yardSaleData).subscribe(data => {
+    this.http.post(link, this.postYardSaleData).subscribe(data => {
       try {
         let response = JSON.parse(data["_body"]);
         console.log(response);

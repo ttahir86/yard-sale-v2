@@ -40,9 +40,16 @@
         </button>
       </div>
     <!-- <agm-marker *ngIf="isUsersLocationLoaded" [latitude]="user.lat" [longitude]="user.lng" [label]="labelOptions " [animation]="2"></agm-marker> -->
-    <agm-marker *ngFor="let sale of sales" [latitude]="sale.latitude" [longitude]="sale.longitude" [label]="labelOptions" [animation]="2"></agm-marker>      
-
-    <agm-circle [latitude]="map.lat" [longitude]="map.lng" [circleDraggable]="false" [editable]="false" [fillColor]="'#FF0000'" [radius]="RADIUS" ></agm-circle>
+    <agm-marker *ngFor="let sale of sales" [latitude]="sale.latitude" [longitude]="sale.longitude" [label]="labelOptions" [animation]="2" [iconUrl]="mapIcon[0]"></agm-marker>      
+    <agm-marker *ngIf="newlyAddedYardSale" [latitude]="newlyAddedYardSale.latitude" [longitude]="newlyAddedYardSale.longitude" [label]="labelOptions" [animation]="2" [iconUrl]="mapIcon[0]"></agm-marker>      
+    
+    <agm-circle 
+      [latitude]="map.lat" 
+      [longitude]="map.lng" 
+      [circleDraggable]="false" 
+      [editable]="false" 
+      [fillColor]="'#c2d5f9'"
+      [radius]="RADIUS" ></agm-circle>
   </agm-map>
 
 <!--    
@@ -83,53 +90,19 @@
           </ion-card-header> -->
 
         <ion-list>
-              <ion-card>
+              <ion-card *ngFor="let sale of sales">
           <ion-item>
             <ion-avatar item-start>
-              <img src="assets/imgs/yardsale-default.png">
+              <img src="assets/imgs/yard-sale-icon.png">
             </ion-avatar>
-            <h2>Big Bob's Blowout Sale!</h2>
+            <h2>{{sale.title}}</h2>
             <ion-badge item-end>   <ion-icon name="car"></ion-icon>          </ion-badge>
-            <p>2.8 miles</p>
+            <p style="opacity: 0.75; color: grey; font-size: 14px; ">{{sale.distance}} mi.</p>
           </ion-item>
 
           </ion-card>
 
-<ion-card>
-
-          <ion-item>
-            <ion-avatar item-start>
-              <img src="assets/imgs/yardsale-default.png">
-            </ion-avatar>
-          <h2>MOOOOOO Sale!!</h2>
-          <ion-badge item-end>   <ion-icon name="car"></ion-icon>          </ion-badge>
-          <p>3.2 miles</p>
-          </ion-item>
-
-
-
-          </ion-card>
-
-
-<ion-card>
-
-
-          <ion-item>
-            <ion-avatar item-start>
-              <img src="assets/imgs/yardsale-default.png">
-            </ion-avatar>
-            <h2>Check out our stuff!</h2>
-            <ion-badge item-end>   <ion-icon name="car"></ion-icon>          </ion-badge>
-            <p>4.7 miles</p>
-          </ion-item>
-
-
-          </ion-card>
         </ion-list>
-        <!-- </ion-card> -->
-
-
-
     </ion-content>
   </ion-pullup>
 
