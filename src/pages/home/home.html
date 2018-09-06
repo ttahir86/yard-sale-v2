@@ -60,12 +60,13 @@
     </ion-fab> -->
     
 
-
-  <ion-fab left bottom>
-    <button (click)="createYardSale()" ion-fab color="fabbtn">
+<div *ngIf="bDoesUserHaveActiveSale == false">
+  <ion-fab  right top>
+    <button (click)="createYardSale()" ion-fab color="fabbtn" [disabled]="isAddYardSaleButtonDisabled">
       <ion-icon name="add" ></ion-icon>
     </button>
   </ion-fab>
+  </div>
 
 
   <ion-pullup (onExpand)="footerExpanded()" (onCollapse)="footerCollapsed()" [(state)]="footerState" >

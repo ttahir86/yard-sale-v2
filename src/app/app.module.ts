@@ -15,7 +15,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { Geolocation } from '@ionic-native/geolocation';
 import { AgmCoreModule } from '@agm/core';
 import { IonPullupModule } from 'ionic-pullup';
-import { UniqueDeviceID } from '../../node_modules/@ionic-native/unique-device-id';
+import { IonicStorageModule } from '@ionic/storage';
 
 // google key: AIzaSyBq72yRsZZmvtdRX9SUaVu5Fqee8RKTCcM
 
@@ -29,6 +29,7 @@ import { UniqueDeviceID } from '../../node_modules/@ionic-native/unique-device-i
     BrowserModule,
     HttpModule,
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot(),
     AgmCoreModule.forRoot({ apiKey: 'AIzaSyBq72yRsZZmvtdRX9SUaVu5Fqee8RKTCcM' }),
     IonPullupModule
   ],
@@ -40,7 +41,6 @@ import { UniqueDeviceID } from '../../node_modules/@ionic-native/unique-device-i
   ],
   providers: [
     StatusBar,
-    UniqueDeviceID,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Geolocation

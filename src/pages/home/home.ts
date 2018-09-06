@@ -3,7 +3,7 @@ import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { IonPullUpFooterState } from '../../../node_modules/ionic-pullup';
 import { CreateYardSalePage } from '../create-yard-sale/create-yard-sale';
-import { UniqueDeviceID } from '@ionic-native/unique-device-id';
+import { Storage } from '@ionic/storage';
 import { Http } from '../../../node_modules/@angular/http';
 
 
@@ -25,6 +25,11 @@ export class HomePage {
   sales: any[] = [];
   closestSales: any;
   newlyAddedYardSale: any = false;
+  isAddYardSaleButtonDisabled: boolean = true;
+  bDoesUserExist = false;
+  username: any = false;
+  usersSale: any = false;
+  bDoesUserHaveActiveSale = false;
 
   public labelOptions = {
     color: '#CC0000',
@@ -42,7 +47,8 @@ export class HomePage {
   public user: any = {
     lat: 5,
     lng: 5,
-    zoom: this.ZOOM_LEVEL
+    zoom: this.ZOOM_LEVEL,
+    username: false
   };
 
   mapIcon: any = {
@@ -60,19 +66,72 @@ export class HomePage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
      private geolocation: Geolocation, 
      private modalCtrl: ModalController,
-     private uniqueDeviceID: UniqueDeviceID,
-    private http: Http) { 
+    private http: Http,
+    private storage: Storage) { 
     this.footerState = IonPullUpFooterState.Collapsed;
   }
 
+  deleteStorageKey(key){
+    this.storage.remove(key).then(() => { })
+  }
+
   ionViewDidLoad() {
-    this.uniqueDeviceID.get()
-      .then((uuid: any) => console.log(uuid))
-      .catch((error: any) => console.log(error));
+    // this.deleteStorageKey("username");
+    let key = "username";
+    this.storage.get(key).then((name) => {
+        console.log('get callback: ' + name);
+        
+        
+        this.bDoesUserExist = name == null ? false : true;
+        if(!this.bDoesUserExist){
+          console.log('making new user')
+          this.makeNewUser();
+        }else{
+          name = name.replace(/['"]+/g, '').replace(/[\r\n]/g, "");
+          this.username = name;
+          this.storage.set(key, this.username)
+          this.user['username'] = this.username;
+          this.bDoesUserExist = true;
+          console.log('running rindIfUserHasAc')
+          this.findIfUserHasActiveYardSale(name);
+        }
+        
+    });
+
+
+    
     this.RADIUS = (1609.34 * this.MAX_DISTANCE_TO_SEARCH)
 
     this.getUsersLocation();
+    
+  }
 
+  makeNewUser(){
+    var link = 'https://talaltahir.com/local-messages-api/make-new-user.php';
+    let key = "username";
+    this.http.post(link, {}).subscribe(data => {
+      try {
+
+
+       
+        this.username = data["_body"].replace(/['"]+/g, '').replace(/[\r\n]/g, "");;
+        this.storage.set(key, this.username)
+        this.user['username'] = this.username;
+        this.bDoesUserExist = true;
+        console.log(this.username);
+        console.log("this.bDoesUserExist : " + this.bDoesUserExist)
+        this.bDoesUserExist = true;
+
+       
+      } catch (error) {
+        console.log(data);
+        console.log(error);
+      
+
+      }
+    }, error => {
+      console.log(error);
+    });
   }
 
   createYardSale(){
@@ -107,7 +166,8 @@ export class HomePage {
 
 
   getUsersLocation(){
-
+    this.isAddYardSaleButtonDisabled = true;
+    console.log('geocallback')
     let GPSoptions = { enableHighAccuracy: true, maximumAge: 0 };
     this.geolocation.getCurrentPosition(GPSoptions)
       .then((position) => {
@@ -121,7 +181,7 @@ export class HomePage {
 
 
   geolocationCallBack(pos) {
-
+console.log('geocallback')
     this.map = {
       lat: pos.coords.latitude,
       lng: pos.coords.longitude,
@@ -131,11 +191,12 @@ export class HomePage {
     this.user = {
       lat: pos.coords.latitude,
       lng: pos.coords.longitude,
-      radius: this.RADIUS
+      radius: this.RADIUS,
+      username: this.username
     }
 
     this.isUsersLocationLoaded = true; 
-
+    this.isAddYardSaleButtonDisabled = false;
     this.findSales();
   }
 
@@ -156,6 +217,36 @@ export class HomePage {
     this.footerState = this.footerState == IonPullUpFooterState.Collapsed ? IonPullUpFooterState.Expanded : IonPullUpFooterState.Collapsed;
   }
 
+  findIfUserHasActiveYardSale(username){
+    console.log("findIfUserHasActiveYardSale: " + username)
+    var link = 'https://talaltahir.com/local-messages-api/find-sales-by-username.php';
+    var userData = JSON.stringify
+      (
+      {
+        username: this.user.username
+      }
+      );
+
+    this.http.post(link, userData).subscribe(data => {
+      try {
+        // console.log(data["_body"]);
+        this.usersSale = data["_body"];
+        console.log("usersSale: " + this.usersSale);
+        this.bDoesUserHaveActiveSale = true;
+        console.log("this.bDoesUserHaveActiveSale: " + this.bDoesUserHaveActiveSale);
+      } catch (error) {
+        console.log(error)
+        console.log(data);
+        console.log("usersSale: " + this.usersSale);
+        this.bDoesUserHaveActiveSale = false;
+        console.log("this.bDoesUserHaveActiveSale: " + this.bDoesUserHaveActiveSale);
+      }
+
+    }, error => {
+      console.log(error);
+    });
+  }
+
 
 
 
@@ -172,7 +263,7 @@ export class HomePage {
   
     this.http.post(link, userGeoData).subscribe(data => {
       try {
-        console.log(data["_body"]);
+        // console.log(data["_body"]);
         this.closestSales = JSON.parse(data["_body"]);
       } catch (error) {
         console.log(data);

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, ToastController,AlertController, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, ToastController, AlertController, LoadingController } from 'ionic-angular';
 import { Http } from '../../../node_modules/@angular/http';
 
 
@@ -26,7 +26,7 @@ export class CreateYardSalePage {
   btnKeepDisabling : boolean = true;
   dateStyle = "date-selected";
   selectedDateId: any = false;
-  user: {lat: string, lng: string} = {lat: '', lng: ''};
+  user: { lat: string, lng: string, username: string } = { lat: '', lng: '', username: ''};
   selectedTime: any;
   selectedDate: any;
   postYardSaleData: any;
@@ -274,7 +274,8 @@ export class CreateYardSalePage {
         lat: this.user.lat,
         lng: this.user.lng,
         startDate: this.selectedDate,
-        startTime: this.selectedTime
+        startTime: this.selectedTime,
+        username: this.user.username
       }
     );
 
