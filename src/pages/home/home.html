@@ -68,6 +68,14 @@
   </ion-fab>
   </div>
 
+  <div *ngIf="bDoesUserHaveActiveSale == true">
+    <ion-fab right top>
+      <button (click)="createYardSale()" ion-fab color="fabbtn" [disabled]="isAddYardSaleButtonDisabled">
+        <ion-icon name="create"></ion-icon>
+      </button>
+    </ion-fab>
+  </div>
+
 
   <ion-pullup (onExpand)="footerExpanded()" (onCollapse)="footerCollapsed()" [(state)]="footerState" >
     <ion-pullup-tab  (tap)="toggleFooter()" style="background-color: #3f6093">

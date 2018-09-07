@@ -29,7 +29,7 @@ export class HomePage {
   bDoesUserExist = false;
   username: any = false;
   usersSale: any = false;
-  bDoesUserHaveActiveSale = false;
+  bDoesUserHaveActiveSale: any = "yo";
 
   public labelOptions = {
     color: '#CC0000',
@@ -155,6 +155,7 @@ export class HomePage {
             title: '', 
             distance: 0.0
           })
+        this.bDoesUserHaveActiveSale = true;
 
       }catch(error){
         console.log(error)
@@ -219,21 +220,26 @@ console.log('geocallback')
 
   findIfUserHasActiveYardSale(username){
     console.log("findIfUserHasActiveYardSale: " + username)
-    var link = 'https://talaltahir.com/local-messages-api/find-sales-by-username.php';
-    var userData = JSON.stringify
-      (
+    let link = 'https://talaltahir.com/local-messages-api/find-sales-by-username.php';
+    let userData = 
       {
         username: this.user.username
       }
-      );
-
+   
+    console.log("post data:")
+    console.log(userData)
     this.http.post(link, userData).subscribe(data => {
       try {
         // console.log(data["_body"]);
-        this.usersSale = data["_body"];
+        this.usersSale = data["_body"].replace(/[\r\n]/g, "");
         console.log("usersSale: " + this.usersSale);
-        this.bDoesUserHaveActiveSale = true;
+        console.log(this.usersSale);
+        this.bDoesUserHaveActiveSale = this.usersSale == "false" ? false : true;
         console.log("this.bDoesUserHaveActiveSale: " + this.bDoesUserHaveActiveSale);
+        if(this.bDoesUserHaveActiveSale){
+          this.usersSale = JSON.parse(this.usersSale);
+          console.log(this.usersSale);
+        }
       } catch (error) {
         console.log(error)
         console.log(data);
@@ -246,6 +252,7 @@ console.log('geocallback')
       console.log(error);
     });
   }
+
 
 
 

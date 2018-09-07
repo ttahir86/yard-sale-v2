@@ -29,7 +29,7 @@ import { IonicStorageModule } from '@ionic/storage';
     HttpModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
-    AgmCoreModule.forRoot({ apiKey: 'AIzaSyDJNlbtm6ijyCp58_sATnfhN5wW3Ei0JR4' }),
+    AgmCoreModule.forRoot({ apiKey: '' }),
     IonPullupModule
   ],
   bootstrap: [IonicApp],
