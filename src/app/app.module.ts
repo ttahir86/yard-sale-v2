@@ -17,7 +17,6 @@ import { AgmCoreModule } from '@agm/core';
 import { IonPullupModule } from 'ionic-pullup';
 import { IonicStorageModule } from '@ionic/storage';
 
-// google key: AIzaSyBq72yRsZZmvtdRX9SUaVu5Fqee8RKTCcM
 
 @NgModule({
   declarations: [
@@ -30,7 +29,7 @@ import { IonicStorageModule } from '@ionic/storage';
     HttpModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
-    AgmCoreModule.forRoot({ apiKey: 'AIzaSyBq72yRsZZmvtdRX9SUaVu5Fqee8RKTCcM' }),
+    AgmCoreModule.forRoot({ apiKey: 'AIzaSyDJNlbtm6ijyCp58_sATnfhN5wW3Ei0JR4' }),
     IonPullupModule
   ],
   bootstrap: [IonicApp],
