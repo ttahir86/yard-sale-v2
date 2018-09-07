@@ -1,22 +1,22 @@
 <ion-header>
-  
+
   <ion-navbar color="primaryCustom">
-      <button ion-button menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
- 
-      
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+
     <ion-title>
       <!-- <img alt="logo" height="40" src="assets/imgs/whale-sale.png">  -->
 
       W&nbsp;h&nbsp;a&nbsp;l&nbsp;e&nbsp;S&nbsp;a&nbsp;l&nbsp;e
-      
-  </ion-title>
-  </ion-navbar> 
+
+    </ion-title>
+  </ion-navbar>
 </ion-header>
 
 <ion-content>
-<!-- style="width:100%; height: 100%"
+  <!-- style="width:100%; height: 100%"
         [latitude]="map.lat" 
         [longitude]="map.lng" 
         [zoom]="map.zoom"
@@ -26,92 +26,94 @@
         [streetViewControl]="svcOptions" 
         [zoomControlOptions]="svcOptions"
        -->
-  <agm-map 
-        style="width:100%; height: 100%"
-        [latitude]="map.lat" 
-        [longitude]="map.lng" 
-        [zoom]="map.zoom">
-      <div class="action-buttons">
-        <button color="primary" ion-button text-only>
-          Button 1
-        </button>
-        <button color="primary" ion-button text-only>
-          Button 2
-        </button>
-      </div>
+  <agm-map (mapReady)="mapReady($event)" style="width:100%; height: 100%" [latitude]="map['lat']" [longitude]="map['lng']" [zoom]="map['zoom']">
+    <div class="action-buttons">
+      <button color="primary" ion-button text-only>
+        Button 1
+      </button>
+      <button color="primary" ion-button text-only>
+        Button 2
+      </button>
+    </div>
     <!-- <agm-marker *ngIf="isUsersLocationLoaded" [latitude]="user.lat" [longitude]="user.lng" [label]="labelOptions " [animation]="2"></agm-marker> -->
-    <agm-marker *ngFor="let sale of sales" [latitude]="sale.latitude" [longitude]="sale.longitude" [label]="labelOptions" [animation]="2" [iconUrl]="mapIcon[0]"></agm-marker>      
-    <agm-marker *ngIf="newlyAddedYardSale" [latitude]="newlyAddedYardSale.latitude" [longitude]="newlyAddedYardSale.longitude" [label]="labelOptions" [animation]="2" [iconUrl]="mapIcon[0]"></agm-marker>      
-    
-    <agm-circle 
-      [latitude]="map.lat" 
-      [longitude]="map.lng" 
-      [circleDraggable]="false" 
-      [editable]="false" 
-      [fillColor]="'#c2d5f9'"
-      [radius]="RADIUS" ></agm-circle>
+    <agm-marker *ngFor="let sale of sales" [latitude]="sale.latitude" [longitude]="sale.longitude" [label]="labelOptions" [animation]="2"
+      [iconUrl]="mapIcon[0]"></agm-marker>
+    <agm-marker *ngIf="newlyAddedYardSale" [latitude]="newlyAddedYardSale.latitude" [longitude]="newlyAddedYardSale.longitude"
+      [label]="labelOptions" [animation]="2" [iconUrl]="mapIcon[0]"></agm-marker>
+
+    <agm-circle [latitude]="map['lat']" [longitude]="map['lng']" [circleDraggable]="false" [editable]="false" [fillColor]="'#c2d5f9'"
+      [radius]="RADIUS"></agm-circle>
   </agm-map>
 
-<!--    
-    <ion-fab top right edge>
-      <button  ion-fab  color="fabbtn" menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
-    </ion-fab> -->
-    
 
-<div *ngIf="bDoesUserHaveActiveSale == false">
-  <ion-fab  right top>
-    <button (click)="createYardSale()" ion-fab color="fabbtn" [disabled]="isAddYardSaleButtonDisabled">
-      <ion-icon name="add" ></ion-icon>
-    </button>
-  </ion-fab>
-  </div>
-
-  <div *ngIf="bDoesUserHaveActiveSale == true">
-    <ion-fab right top>
-      <button (click)="createYardSale()" ion-fab color="fabbtn" [disabled]="isAddYardSaleButtonDisabled">
-        <ion-icon name="create"></ion-icon>
-      </button>
-    </ion-fab>
-  </div>
-
-
-  <ion-pullup (onExpand)="footerExpanded()" (onCollapse)="footerCollapsed()" [(state)]="footerState" >
-    <ion-pullup-tab  (tap)="toggleFooter()" style="background-color: #3f6093">
-          <!-- <ion-pullup-tab (tap)="toggleFooter()" style="background-color: #222"> -->
-
-      <ion-icon name="arrow-up" *ngIf="footerState == 0" color="white"></ion-icon>
-      <ion-icon name="arrow-down" *ngIf="footerState == 1"  color="white"></ion-icon>
-    </ion-pullup-tab>
-    <!-- <ion-toolbar color="lightCustom" (tap)="toggleFooter()">
-      <ion-title>Sales Near You</ion-title>
-    </ion-toolbar> -->
-    <ion-content>
-      
-
-
-
-
-        <!-- <ion-card> -->
-          <!-- <ion-card-header>
-            Yard Sales Nearby
-          </ion-card-header> -->
-
-        <ion-list>
-              <ion-card *ngFor="let sale of sales">
+  <ion-fab top left end>
+    <ion-slides (ionSlideDidChange)="slideChanged()"> 
+      <ion-slide *ngFor="let sale of sales">
+        <ion-card (click)="centerMap(sale)">
           <ion-item>
             <ion-avatar item-start>
               <img src="assets/imgs/yard-sale-icon.png">
             </ion-avatar>
             <h2>{{sale.title}}</h2>
-            <ion-badge item-end>   <ion-icon name="car"></ion-icon>          </ion-badge>
+            <ion-badge item-end>
+              <ion-icon name="car"></ion-icon>
+            </ion-badge>
+            <p style="opacity: 0.75; color: grey; font-size: 14px; ">{{sale.distance}} mi.</p>
+          </ion-item>
+        </ion-card>
+      </ion-slide>
+    </ion-slides>
+  </ion-fab>
+
+
+    <ion-fab left bottom *ngIf="bDoesUserHaveActiveSale == false">
+      <button (click)="createYardSale()" ion-fab ion-round color="fabbtn" [disabled]="isAddYardSaleButtonDisabled">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-fab>
+ 
+
+
+    <ion-fab left bottom *ngIf="bDoesUserHaveActiveSale == true">
+      <button (click)="openModalEdit()" ion-fab color="fabbtn" [disabled]="isAddYardSaleButtonDisabled">
+        <ion-icon name="create"></ion-icon>
+      </button>
+    </ion-fab>
+
+
+
+  <ion-pullup (onExpand)="footerExpanded()" (onCollapse)="footerCollapsed()" [(state)]="footerState">
+    <ion-pullup-tab (tap)="toggleFooter()" style="background-color: #3f6093">
+      <!-- <ion-pullup-tab (tap)="toggleFooter()" style="background-color: #222"> -->
+
+      <ion-icon name="arrow-up" *ngIf="footerState == 0" color="white"></ion-icon>
+      <ion-icon name="arrow-down" *ngIf="footerState == 1" color="white"></ion-icon>
+    </ion-pullup-tab>
+    <!-- <ion-toolbar color="lightCustom" (tap)="toggleFooter()">
+      <ion-title>Sales Near You</ion-title>
+    </ion-toolbar> -->
+    <ion-content>
+      <!-- <ion-card> -->
+      <!-- <ion-card-header>
+            Yard Sales Nearby
+          </ion-card-header> -->
+
+      <ion-list>
+        <ion-card *ngFor="let sale of sales">
+          <ion-item>
+            <ion-avatar item-start>
+              <img src="assets/imgs/yard-sale-icon.png">
+            </ion-avatar>
+            <h2>{{sale.title}}</h2>
+            <ion-badge item-end>
+              <ion-icon name="car"></ion-icon>
+            </ion-badge>
             <p style="opacity: 0.75; color: grey; font-size: 14px; ">{{sale.distance}} mi.</p>
           </ion-item>
 
-          </ion-card>
+        </ion-card>
 
-        </ion-list>
+      </ion-list>
     </ion-content>
   </ion-pullup>
 

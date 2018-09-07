@@ -268,16 +268,15 @@ export class CreateYardSalePage {
     console.log(this.selectedTime);
     var link = 'https://talaltahir.com/local-messages-api/create-whale-sale.php';
 
-    this.postYardSaleData = JSON.stringify
-    (
+    this.postYardSaleData = 
       {
-        lat: this.user.lat,
-        lng: this.user.lng,
-        startDate: this.selectedDate,
-        startTime: this.selectedTime,
-        username: this.user.username
+        "lat": this.user.lat,
+        "lng": this.user.lng,
+        "startDate": this.selectedDate,
+        "startTime": this.selectedTime,
+        "username": this.user.username
       }
-    );
+
 
     this.http.post(link, this.postYardSaleData).subscribe(data => {
       try {
@@ -288,6 +287,7 @@ export class CreateYardSalePage {
         setTimeout(() => {
           this.presentToastSuccess();
         }, 3000);
+        
         
         this.closeModal();
       } catch (error) {

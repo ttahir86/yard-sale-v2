@@ -86,7 +86,7 @@
                 [style.color]="selectedDateId === i ? '#488aff' : 'black'"
                 [style.font-weight]="selectedDateId === i ? 'bold' : 'normal'"
                 [style.opacity]="selectedDateId === i ? '1.0' : '0.7'">
-                {{date.date}}
+                {{date['date']}}
               </ion-label>
               <ion-label 
                 [id]="i" 
@@ -95,7 +95,7 @@
                 [style.font-weight]="selectedDateId === i ? 'bold' : 'normal'"
                 [style.color]="selectedDateId === i ? '#488aff' : 'black'"
                 [style.opacity]="selectedDateId === i ? '0.8' : '0.5'">
-                {{date.day}}</ion-label>
+                {{date['day']}}</ion-label>
 
             </ion-col>
           </ion-row>
